@@ -39,7 +39,33 @@ module.exports = {
     // then `scope.args` would be `['user', 'find', 'create', 'update']`
     if (!scope.args[0]) {
       return cb( new Error('Please provide a name for this backbone.') );
+    } else {
+      if (scope.args[scope.args.length -1] == '--coffee')
+        scope.language = 'coffee';
+      i = 0;
+      for (i = 0; i < scope.args.length; i+=2) {
+        switch(scope.args[i]) {
+        case 'model' :
+          scope.model = [scope.args[i+1],'Model.',scope.language].join();
+          break;
+        case 'collection':
+          scope.collection = [scope.args[i+1],'Collection.',scope.language].join();
+          break;
+        case 'router':
+          scope.router = [scope.args[i+1],'Router.',scope.language].join();
+          break;
+        case 'view':
+          scope.view = [scope.args[i+1],'View.',scope.language].join();
+          break;
+        default:
+          scope.model = [scope.args[i+1],'Model.',scope.language].join();
+          scope.collection = [scope.args[i+1],'Collection.',scope.language].join();
+          scope.router = [scope.args[i+1],'Router.',scope.language].join();
+          scope.view = [scope.args[i+1],'View.',scope.language].join();
+        }
+      }
     }
+
 
     // scope.rootPath is the base path for this generator
     //
@@ -59,10 +85,9 @@ module.exports = {
     });
 
     // Decide the output filename for use in targets below:
-    scope.filename = scope.args[0];
 
     // Add other stuff to the scope for use in our templates:
-    scope.whatIsThis = 'an example file created at '+scope.createdAt;
+    scope.whatIsThis = 'a backbone file created at '+scope.createdAt;
 
     // When finished, we trigger a callback with no error
     // to begin generating files/folders as specified by
@@ -88,10 +113,17 @@ module.exports = {
     // The `template` helper reads the specified template, making the
     // entire scope available to it (uses underscore/JST/ejs syntax).
     // Then the file is copied into the specified destination (on the left).
-    './:filename': { template: 'example.template.js' },
+    // Creates folders at a static path
+    './assets/js/models': { folder: {} }
+    './assets/js/views': { folder: {} }
+    './assets/js/collections': { folder: {} }
+    './assets/js/routers': { folder: {} }
 
-    // Creates a folder at a static path
-    './hey_look_a_folder': { folder: {} }
+    // creates files
+    './assets/js/models/:model': { template: 'model.' + scope.language},
+    './assets/js/views/:view': { template: 'view.' + scope.language},
+    './assets/js/collections/:collection': { template: 'collection.' + scope.language},
+    './assets/js/routers/:router': { template: 'router.' + scope.language},
 
   },
 
