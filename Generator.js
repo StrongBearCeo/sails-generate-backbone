@@ -42,36 +42,10 @@ module.exports = {
     if (!scope.args[0]) {
       return cb( new Error('Please provide a name for this backbone.') );
     } else {
-      console.log(scope.args);
-      if (scope.args[scope.args.length -1] == 'coffee') {
-        console.log('hereee');
-        language = '.coffee';
-        scope.args.pop();
-        console.log(scope.args.length)
-      }
-      if (scope.args.length > 1) {
-        for (i = 0; i < scope.args.length; i+=2) {
-          switch(scope.args[i]) {
-          case 'model' :
-            scope.model = [scope.args[i+1],'Model'].join('');
-            break;
-          case 'collection':
-            scope.collection = [scope.args[i+1],'Collection'].join('');
-            break;
-          case 'router':
-            scope.router = [scope.args[i+1],'Router'].join('');
-            break;
-          case 'view':
-            scope.view = [scope.args[i+1],'View'].join('');
-            break;
-          }
-        }
-      } else {
         scope.model = [scope.args[0],'Model'].join('');
         scope.collection = [scope.args[0],'Collection'].join('');
         scope.router = [scope.args[0],'Router'].join('');
         scope.view = [scope.args[0],'View'].join('');
-      }
     }
 
 
@@ -107,7 +81,7 @@ module.exports = {
     // When finished, we trigger a callback with no error
     // to begin generating files/folders as specified by
     // the `targets` below.
-
+    console.log(cb+'');
     cb();
   },
 
