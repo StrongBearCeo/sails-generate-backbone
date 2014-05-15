@@ -5,7 +5,7 @@
 var util = require('util');
 var _ = require('lodash');
 _.defaults = require('merge-defaults');
-var language = '.js';
+var language = '.coffee';
 var fs = require('fs');
 
 
@@ -81,7 +81,6 @@ module.exports = {
     // When finished, we trigger a callback with no error
     // to begin generating files/folders as specified by
     // the `targets` below.
-    console.log(cb+'');
     cb();
   },
 
@@ -105,13 +104,13 @@ module.exports = {
     // Then the file is copied into the specified destination (on the left).
     // Creates folders at a static path
     if (!fs.existsSync('./assets/js/models'))
-      this.targets['./assets/js/models'] = {folder: {}};
+      this['./assets/js/models'] = {folder: {}};
     if (!fs.existsSync('./assets/js/views'))
-      this.targets['./assets/js/views'] = {folder: {}};
+      this['./assets/js/views'] = {folder: {}};
     if (!fs.existsSync('./assets/js/collections'))
-      this.targets['./assets/js/collections'] = {folder: {}};
+      this['./assets/js/collections'] = {folder: {}};
     if (!fs.existsSync('./assets/js/routers'))
-      this.targets['./assets/js/routers'] = {folder: {}};
+      this['./assets/js/routers'] = {folder: {}};
 
     // creates files
     this['./assets/js/models/:model:' + language] = { template: 'model' + language};
