@@ -113,7 +113,7 @@ module.exports = {
       this['./assets/js/routers'] = {folder: {}};
 
     // creates files
-    this['./assets/js/models/:model:' + language] = { template: 'model' + language};
+    this['./assets/js/models/:model' + language] = { template: 'model' + language};
     this['./assets/js/views/:view' + language] = { template: 'view' + language};
     this['./assets/js/collections/:collection' + language] = { template: 'collection' + language};
     this['./assets/js/routers/:router' + language] = { template: 'router' + language};
