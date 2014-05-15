@@ -43,32 +43,34 @@ module.exports = {
       return cb( new Error('Please provide a name for this backbone.') );
     } else {
       console.log(scope.args);
-      if (scope.args[scope.args.length -1] == '--coffee') {
+      if (scope.args[scope.args.length -1] == 'coffee') {
+        console.log('hereee');
         language = '.coffee';
-        scope.args.pop;
+        scope.args.pop();
+        console.log(scope.args.length)
       }
       if (scope.args.length > 1) {
         for (i = 0; i < scope.args.length; i+=2) {
           switch(scope.args[i]) {
           case 'model' :
-            scope.model = [scope.args[i+1],'Model',scope.language].join('');
+            scope.model = [scope.args[i+1],'Model'].join('');
             break;
           case 'collection':
-            scope.collection = [scope.args[i+1],'Collection',scope.language].join('');
+            scope.collection = [scope.args[i+1],'Collection'].join('');
             break;
           case 'router':
-            scope.router = [scope.args[i+1],'Router',scope.language].join('');
+            scope.router = [scope.args[i+1],'Router'].join('');
             break;
           case 'view':
-            scope.view = [scope.args[i+1],'View',scope.language].join('');
+            scope.view = [scope.args[i+1],'View'].join('');
             break;
           }
         }
       } else {
-        scope.model = [scope.args[0],'Model',scope.language].join('');
-        scope.collection = [scope.args[0],'Collection',scope.language].join('');
-        scope.router = [scope.args[0],'Router',scope.language].join('');
-        scope.view = [scope.args[0],'View',scope.language].join('');
+        scope.model = [scope.args[0],'Model'].join('');
+        scope.collection = [scope.args[0],'Collection'].join('');
+        scope.router = [scope.args[0],'Router'].join('');
+        scope.view = [scope.args[0],'View'].join('');
       }
     }
 
@@ -116,7 +118,7 @@ module.exports = {
    * @type {Object}
    */
 
-  targets: {
+  targets: new (function() {
 
     // Usage:
     // './path/to/destination.foo': { someHelper: opts }
@@ -128,15 +130,21 @@ module.exports = {
     // entire scope available to it (uses underscore/JST/ejs syntax).
     // Then the file is copied into the specified destination (on the left).
     // Creates folders at a static path
-
+    if (!fs.existsSync('./assets/js/models'))
+      this.targets['./assets/js/models'] = {folder: {}};
+    if (!fs.existsSync('./assets/js/views'))
+      this.targets['./assets/js/views'] = {folder: {}};
+    if (!fs.existsSync('./assets/js/collections'))
+      this.targets['./assets/js/collections'] = {folder: {}};
+    if (!fs.existsSync('./assets/js/routers'))
+      this.targets['./assets/js/routers'] = {folder: {}};
 
     // creates files
-    './assets/js/models/:model': { template: 'model' + language},
-    './assets/js/views/:view': { template: 'view' + language},
-    './assets/js/collections/:collection': { template: 'collection' + language},
-    './assets/js/routers/:router': { template: 'router' + language},
-
-  },
+    this['./assets/js/models/:model:' + language] = { template: 'model' + language};
+    this['./assets/js/views/:view' + language] = { template: 'view' + language};
+    this['./assets/js/collections/:collection' + language] = { template: 'collection' + language};
+    this['./assets/js/routers/:router' + language] = { template: 'router' + language};
+  })(),
 
 
   /**
@@ -147,16 +155,6 @@ module.exports = {
    */
   templatesDirectory: require('path').resolve(__dirname, './templates')
 };
-
-
-if (!fs.existsSync('./assets/js/models'))
-  module.exports.targets['./assets/js/models'] = {folder: {}};
-if (!fs.existsSync('./assets/js/views'))
-  module.exports.targets['./assets/js/views'] = {folder: {}};
-if (!fs.existsSync('./assets/js/collections'))
-  module.exports.targets['./assets/js/collections'] = {folder: {}};
-if (!fs.existsSync('./assets/js/routers'))
-  module.exports.targets['./assets/js/routers'] = {folder: {}};
 
 
 /**
