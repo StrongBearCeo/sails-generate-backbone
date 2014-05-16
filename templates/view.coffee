@@ -5,3 +5,4 @@
 		@$el.html Templates[@templateName] @model.attributes;
 		# use for collection
 		# @$el.html Templates[@templateName] @collection.toJSON();
+		return
