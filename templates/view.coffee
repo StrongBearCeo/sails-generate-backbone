@@ -4,4 +4,4 @@
 		# use for model
 		@$el.html Templates[@templateName] @model.attributes;
 		# use for collection
-		# @$el.html Templates[@templateName] @collection.toJSON;
+		# @$el.html Templates[@templateName] @collection.toJSON();

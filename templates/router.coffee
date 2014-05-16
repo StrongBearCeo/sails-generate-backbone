@@ -5,4 +5,4 @@
 
 $ ->
 	<%= lowerFirstCharacter(router) %> = new <%= capitalize(router) %>
-	Backbone.history.start
+	Backbone.history.start()
